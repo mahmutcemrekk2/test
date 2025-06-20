@@ -1,0 +1,33 @@
+name: Java Tests with Maven and Allure
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Kodu klonla
+        uses: actions/checkout@v3
+
+      - name: Java 8 kur
+        uses: actions/setup-java@v3
+        with:
+          java-version: '8'
+          distribution: 'temurin'
+
+      - name: Maven ile testleri çalıştır
+        run: mvn clean test
+
+      - name: Allure raporlarını üret
+        run: mvn allure:report
+
+      - name: Allure raporunu yayınla
+        uses: actions/upload-artifact@v3
+        with:
+          name: allure-report
+          path: target/site/allure-maven-plugin/
