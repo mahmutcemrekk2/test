@@ -15,7 +15,7 @@ public class CouponPage {
     public By successMessage = By.id("bet-success-message");
 
     public void openKiosk() {
-        DriverManager.getDriver().get("https://example.com");
+        DriverManager.getDriver().get("https://www.nesine.com/");
         Logger.log("Kiosk ekranı açıldı.");
     }
 
