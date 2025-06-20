@@ -22,7 +22,10 @@ jobs:
           distribution: 'temurin'
 
       - name: Maven ile testleri çalıştır
-        run: mvn clean test
+        run: mvn clean test -Dsurefire.useFile=false
+
+      - name: Allure sonuç klasörünü kontrol et
+        run: ls -la target/allure-results || echo "allure-results not found"
 
       - name: Allure raporlarını üret
         run: |
