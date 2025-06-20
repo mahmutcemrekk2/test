@@ -8,20 +8,29 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Kodu klonla
+        uses: actions/checkout@v3
 
-      - name: Set up JDK 24
-        uses: actions/setup-java@v4
+      - name: Java 8 kur
+        uses: actions/setup-java@v3
         with:
-          distribution: 'oracle'
-          java-version: '24'
+          java-version: '8'
+          distribution: 'temurin'
 
-      - name: Build with Maven
+      - name: Maven ile testleri çalıştır
         run: mvn clean test
 
-      - name: Generate Allure Report
-        run: mvn allure:report
+      - name: Allure raporlarını üret
+        run: |
+          mvn allure:report
+          ls -l target/site/allure-maven-plugin || echo "Allure report not found"
+
+      - name: Allure raporunu yayınla
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report
+          path: target/site/allure-maven-plugin/
