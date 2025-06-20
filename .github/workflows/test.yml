@@ -28,9 +28,8 @@ jobs:
         run: ls -la target/allure-results || echo "allure-results not found"
 
       - name: Allure raporlarını üret
-        run: |
-          mvn allure:report
-          ls -l target/site/allure-maven-plugin || echo "Allure report not found"
+        run: mvn allure:report -Dallure.results.directory=target/allure-results
+
 
       - name: Allure raporunu yayınla
         uses: actions/upload-artifact@v4
