@@ -8,10 +8,14 @@ import utils.DriverManager;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-    features = "src/test/resources/features",
-    glue = {"stepdefinitions"},
-    plugin = {"pretty", "html:target/cucumber-report.html"},
-    monochrome = true
+        features = "src/test/resources/features",
+        glue = {"stepdefinitions"},
+        plugin = {
+                "pretty",
+                "html:target/cucumber-report.html",
+                "io.qameta.allure.cucumber6jvm.AllureCucumber6Jvm"
+        },
+        monochrome = true
 )
 public class TestRunner {
     @AfterClass

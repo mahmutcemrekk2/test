@@ -5,6 +5,7 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
+  workflow_dispatch:
 
 jobs:
   test:
@@ -21,13 +22,18 @@ jobs:
           distribution: 'temurin'
 
       - name: Maven ile testleri çalıştır
-        run: mvn clean test
+        run: mvn clean test -Dsurefire.useFile=false
+
+      - name: Allure sonuç klasörünü kontrol et
+        run: ls -la target/allure-results || echo "allure-results not found"
 
       - name: Allure raporlarını üret
-        run: mvn allure:report
+        run: |
+          mvn allure:report
+          ls -l target/site/allure-maven-plugin || echo "Allure report not found"
 
       - name: Allure raporunu yayınla
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: allure-report
           path: target/site/allure-maven-plugin/
